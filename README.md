@@ -1,4 +1,5 @@
-[Project]
+# Kuis Survey Anime
+
 Name=Kuis Survey Anime
 Version=1.0.0
 Description=Kuis Survey Anime adalah aplikasi web interaktif yang menampilkan pertanyaan survei seputar dunia anime. Aplikasi ini menampilkan satu soal survey dengan 10 jawaban yang masing-masing memiliki jumlah partisipan yang memberikan jawaban serupa. Data survey disimpan di localStorage untuk mendukung penggunaan berkelanjutan.
