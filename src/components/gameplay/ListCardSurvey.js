@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ListCardSurvey = () => {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <h1 className="text-center mb-2">pilih survey yang ingin dimainkan</h1>
@@ -67,7 +71,7 @@ const ListCardSurvey = () => {
         </div>
       </div>
       <div className="mt-2 text-center">
-        <button className="btn-lg button-77 xlg" role="button">
+        <button className="btn-lg button-77 xlg" onClick={()=>navigate("/main-menu")}>
           Home screen
           <span className="btn-key" data-key="Backspace">
             [Backspace]

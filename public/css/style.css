@@ -415,6 +415,11 @@ h1 {
   color: white;
 }
 
+.form-control::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+
 .form-control:focus {
   outline: none;
   background: none !important;

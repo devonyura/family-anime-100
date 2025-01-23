@@ -1,7 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 // import "./HomeScreen.css";
 
 const HomeScreen = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="overflow-hidden">
       <div className="row align-content-center px-3 py-3 text-center">
@@ -12,9 +16,8 @@ const HomeScreen = () => {
             className="img-fluid"
             width="500"
           />
-          <h1></h1>
           {/* <h1>quis family anime 100!</h1> */}
-          <button className="btn btn-primary btn-lg xlg">Mulai!</button>
+          <button className="btn btn-primary btn-lg xlg" onClick={ ()=>navigate("/main-menu") }>Mulai!</button>
         </div>
       </div>
     </div>

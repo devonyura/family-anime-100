@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const HowToPlay = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="row align-content-center">
       <div className="col d-flex justify-content-center">
@@ -50,7 +54,7 @@ const HowToPlay = () => {
         </div>
       </div>
       <div className="mt-5 text-center">
-        <button className="btn-lg button-77 xlg" role="button">
+        <button className="btn-lg button-77 xlg" onClick={()=>navigate("/main-menu")}>
           Home screen
           <span className="btn-key" data-key="Backspace">
             [Backspace]

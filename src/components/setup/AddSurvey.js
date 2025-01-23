@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddSurvey = () => {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="text-center">
@@ -30,9 +34,8 @@ const AddSurvey = () => {
                 </div>
                 <div className="number-circle form">
                   <input
-                    ttype="text"
-                    maxlength="3"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    type="number"
+                    maxLength="3"
                     className="form-control text-center"
                     placeholder="no"
                   />
@@ -41,32 +44,12 @@ const AddSurvey = () => {
             </div>
           </div>
           <div className="col-md-6">
-            <div className="list-item">
-              <div className="list-card card-78">
-                <div>6.</div>
-                <div className="answer">
-                  <input
-                    type="text"
-                    className="form-control text-center"
-                    placeholder="isi jawaban survey #6"
-                  />
-                </div>
-                <div className="number-circle form">
-                  <input
-                    ttype="text"
-                    maxlength="3"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                    className="form-control text-center"
-                    placeholder="no"
-                  />
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
       <div className="mt-2 text-center">
-        <button className="btn-lg button-77 xlg">
+        <button className="btn-lg button-77 xlg" onClick={()=>navigate("/list-survey")}>
           Back
           <span className="btn-key" data-key="">
             [Backspace]
