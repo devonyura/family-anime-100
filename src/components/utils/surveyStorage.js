@@ -6,16 +6,16 @@ const defaultSurveyData = [
 	{
 		question: "Siapa karakter anime terpopuler?",
 		answers: [
-			{ text: "Naruto", points: 35 },
-			{ text: "Goku", points: 30 },
-			{ text: "Luffy", points: 20 },
-			{ text: "Eren", points: 15 },
-			{ text: "Deku", points: 10 },
-			{ text: "Sasuke", points: 5 },
-			{ text: "Itachi", points: 3 },
-			{ text: "Zoro", points: 2 },
-			{ text: "Levi", points: 1 },
-			{ text: "Gojo", points: 1 },
+			{ answer: "Naruto", points: 35 },
+			{ answer: "Goku", points: 30 },
+			{ answer: "Luffy", points: 20 },
+			{ answer: "Eren", points: 15 },
+			{ answer: "Deku", points: 10 },
+			{ answer: "Sasuke", points: 5 },
+			{ answer: "Itachi", points: 3 },
+			{ answer: "Zoro", points: 2 },
+			{ answer: "Levi", points: 1 },
+			{ answer: "Gojo", points: 1 },
 		],
 	},
 ];
@@ -30,8 +30,18 @@ export  function initializeSurveyData() {
 
 // Mendapatkan semua data survey dari localStorage
 export  function getAllSurveys() {
-	const data = localStorage.getItem(SURVEY_KEY);
+	const data = localStorage.getItem(SURVEY_KEY);      
 	return data ? JSON.parse(data) : [];
+}
+
+// Mendapatkan satu survey berdasarkan indeks
+export function getSurveyByIndex(index) {
+	const surveys = getAllSurveys();
+	if (index >= 0 && index < surveys.length) {
+		return surveys[index];
+	} else {
+		throw new Error("Index survey tidak valid");
+	}
 }
 
 // Menambahkan survey baru ke localStorage
@@ -58,6 +68,7 @@ export  function deleteSurvey(index) {
 	if (index >= 0 && index < surveys.length) {
 		surveys.splice(index, 1);
 		localStorage.setItem(SURVEY_KEY, JSON.stringify(surveys));
+		return true;
 	} else {
 		throw new Error("Index survey tidak valid");
 	}

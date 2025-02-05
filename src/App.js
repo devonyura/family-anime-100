@@ -23,11 +23,11 @@ function App() {
           {/* Setup Section */}
           <Route path="/list-survey" element={<ListSurvey/>} />
           <Route path="/add-survey" element={<AddSurvey/>} />
-          <Route path="/preview-survey" element={<PreviewSurvey/>} />
-          <Route path="/edit-survey" element={<EditSurvey/>} />
+          <Route path="/preview-survey/:index" element={<PreviewSurvey/>} />
+          <Route path="/edit-survey/:index" element={<EditSurvey/>} />
           {/* Gameplay Section */}
           <Route path="/list-card-survey" element={<ListCardSurvey/>} />
-          <Route path="/main-quis-survey" element={<MainQuisSurvey/>} />
+          <Route path="/main-quis-survey/:index" element={<MainQuisSurvey/>} />
         </Routes>
       </div>
     </Router>

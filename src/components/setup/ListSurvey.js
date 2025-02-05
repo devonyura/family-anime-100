@@ -35,7 +35,7 @@ const ListSurvey = () => {
                     {survey.question}
                   </div>
                   <button className="btn-lg button-77 xlg">
-                    <span className="btn-key">Lihat Lengkap [1]</span>
+                    <span className="btn-key" onClick={()=>navigate(`/preview-survey/${index}`)}>Lihat Lengkap [{index + 1}]</span>
                   </button>
                 </div>
               </div>

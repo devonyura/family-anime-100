@@ -1,14 +1,27 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getSurveyByIndex } from "../utils/surveyStorage";
 
 const MainQuisSurvey = () => {
+
+  const { index } = useParams();
+  const survey = getSurveyByIndex(index);
+
+  const navigate = useNavigate();
+
+  if (!survey) {
+    return <p>Survey tidak ditemukan</p>
+  }
+
+  console.log(survey);
   return (
     <>
       <div className="text-center">
-        <h2 className="mb-2">Preview Survey</h2>
+        <h2 className="mb-2">Main Quis Survey</h2>
         <div className="card text-white bg-primary mb-3 px-3 py-2 card-78">
           <div className="card-body">
             <h2 className="card-questions mt-3">
-              siapakah karakter anime terpopuler?
+              {survey.question}
             </h2>
           </div>
         </div>
@@ -16,26 +29,31 @@ const MainQuisSurvey = () => {
       <div className="container my-1">
         <div className="row">
           <div className="col-md-6">
-            <div className="list-item">
-              <div className="list-card card-78 top-survey" data-key="1">
-                <div>1.</div>
-                <div className="answer">Naruto</div>
-                <div className="number-circle">35</div>
+            { survey.answers.slice(0,5).map((item, index)=>(
+              <div className="list-item" key={index}>
+                <div className={`list-card card-78 ${index === 0 ? "top-survey": ""}`} data-key="1">
+                  <div>{index + 1}.</div>
+                  <div className="answer">{item.answer}</div>
+                  <div className="number-circle">{item.points}</div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
           <div className="col-md-6">
-            <div className="list-item">
-              <div className="list-card card-78">
-                <div>6. Sasuke</div>
-                <div className="number-circle">5</div>
-              </div>
-            </div>
+            { survey.answers.slice(5,10).map((item, index)=>(
+                <div className="list-item" key={index + 5}>
+                  <div className="list-card card-78" data-key="1">
+                    <div>{index + 5}.</div>
+                    <div className="answer">{item.answer}</div>
+                    <div className="number-circle">{item.points}</div>
+                  </div>
+                </div>
+            ))}
           </div>
         </div>
       </div>
       <div className="mt-2 text-center">
-        <button className="btn-lg button-77 xlg">
+        <button className="btn-lg button-77 xlg" onClick={()=>navigate("/list-card-survey")}>
           kembali
           <span className="btn-key" data-key="">
             [Backspace]

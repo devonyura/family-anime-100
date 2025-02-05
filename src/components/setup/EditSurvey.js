@@ -1,86 +1,152 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateSurvey, getSurveyByIndex } from "../utils/surveyStorage";
 
 const EditSurvey = () => {
+
+  const {index} = useParams();
+
+  const navigate = useNavigate();
+
+  // State untuk menyimpan inputan
+	const [question, setQuestion] = useState("");
+	const [answers, setAnswers] = useState(Array(10).fill(""));
+	const [points, setPoints] = useState(Array(10).fill(""));
+
+  // Ambil data survey
+  useEffect(()=>{
+    const oldSurvey = getSurveyByIndex(index);
+    if (oldSurvey) {
+      setQuestion(oldSurvey.question);
+      setAnswers(oldSurvey.answers.map( a => a.answer));
+      setPoints(oldSurvey.answers.map( a => a.points.toString()));
+    }
+  }, [index]);
+
+
+  const handleSaveSurvey = () => {
+
+		// Validasi input
+		if (!question.trim() || answers.some(a => !a.trim()) || points.some(p => p === "")) {
+			alert("Harap isi semua input sebelum menyimpan.");
+			return;
+		}
+
+		// Format data survey
+		const updatedSurvey = {
+			question,
+			answers: answers.map((answer, index) => ({
+				answer,
+				points: parseInt(points[index], 10) || 0
+			}))
+		};
+
+		// Simpan survey
+		updateSurvey(index ,updatedSurvey);
+
+		// Redirect ke halaman list survey
+		navigate(`/preview-survey/${index}`);
+	};
+
+	const handleAnswerChange = (index, value) => {
+		const newAnswers = [...answers];
+		newAnswers[index] = value;
+		setAnswers(newAnswers);
+	};
+
+	const handlePointChange = (index, value) => {
+		const newPoints = [...points];
+		newPoints[index] = value;
+		setPoints(newPoints);
+	};
+
   return (
     <>
       <div className="text-center">
-        <h2 className="mb-2">Edit survey</h2>
-        <div className="card text-white bg-primary mb-3 px-3 py-2 card-78 form">
-          <div className="card-body">
-            <input
-              type="text"
-              className="form-control card-questions text-center"
-              placeholder="masukkan soal survey disini"
-              value={"contoh"}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="container my-1">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="list-item">
-              <div className="list-card card-78">
-                <div>1.</div>
-                <div className="answer">
-                  <input
-                    type="text"
-                    className="form-control text-center"
-                    placeholder="isi jawaban top survey #1"
-                    value={"contoh"}
-                  />
-                </div>
-                <div className="number-circle form">
-                  <input
-                    ttype="text"
-                    maxlength="3"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                    className="form-control text-center"
-                    placeholder="no"
-                    value={"10"}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="list-item">
-              <div className="list-card card-78">
-                <div>6.</div>
-                <div className="answer">
-                  <input
-                    type="text"
-                    className="form-control text-center"
-                    placeholder="isi jawaban survey #6"
-                    value={"contoh"}
-                  />
-                </div>
-                <div className="number-circle form">
-                  <input
-                    ttype="text"
-                    maxlength="3"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                    className="form-control text-center"
-                    placeholder="no"
-                    value={"30"}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-2 text-center">
-        <button className="btn-lg button-77 xlg">
-          Back
-          <span className="btn-key" data-key="">
-            [Backspace]
-          </span>
-        </button>
-        <button className="btn-lg button-77 xlg" data-key="Enter">
-          SIMPAN <span className="btn-key">[enter]</span>
-        </button>
-      </div>
+				<h2 className="mb-2">Edit Survey</h2>
+				<div className="card text-white bg-primary mb-3 px-3 py-2 card-78 form">
+					<div className="card-body">
+						<input
+							type="text"
+							className="form-control card-questions text-center"
+							placeholder="Masukkan soal survey di sini"
+							value={question}
+							onChange={(e) => setQuestion(e.target.value)}
+						/>
+					</div>
+				</div>
+			</div>
+			<div className="container my-1">
+				<div className="row">
+					{/* Kolom pertama (jawaban 1-5) */}
+					<div className="col-md-6">
+						{answers.slice(0, 5).map((answer, index) => (
+							<div className="list-item" key={index}>
+								<div className="list-card card-78">
+									<div>{index + 1}.</div>
+									<div className="answer">
+										<input
+											type="text"
+											className="form-control text-center"
+											placeholder={`Isi jawaban top survey #${index + 1}`}
+											value={answer}
+											onChange={(e) => handleAnswerChange(index, e.target.value)}
+										/>
+									</div>
+									<div className="number-circle form">
+										<input
+											type="number"
+											maxLength="3"
+											className="form-control text-center"
+											placeholder="No"
+											value={points[index]}
+											onChange={(e) => handlePointChange(index, e.target.value)}
+										/>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+
+					{/* Kolom kedua (jawaban 6-10) */}
+					<div className="col-md-6">
+						{answers.slice(5, 10).map((answer, index) => (
+							<div className="list-item" key={index + 5}>
+								<div className="list-card card-78">
+									<div>{index + 6}.</div>
+									<div className="answer">
+										<input
+											type="text"
+											className="form-control text-center"
+											placeholder={`Isi jawaban top survey #${index + 6}`}
+											value={answer}
+											onChange={(e) => handleAnswerChange(index + 5, e.target.value)}
+										/>
+									</div>
+									<div className="number-circle form">
+										<input
+											type="number"
+											maxLength="3"
+											className="form-control text-center"
+											placeholder="No"
+											value={points[index]}
+											onChange={(e) => handlePointChange(index + 5, e.target.value)}
+										/>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+			<div className="mt-2 text-center">
+				<button className="btn-lg button-77 xlg" onClick={() => navigate("/list-survey")}>
+					Back <span className="btn-key" data-key="">[Backspace]</span>
+				</button>
+				<button className="btn-lg button-77 xlg" data-key="Enter" onClick={handleSaveSurvey}>
+					SIMPAN <span className="btn-key">[enter]</span>
+				</button>
+			</div>
     </>
   );
 };
