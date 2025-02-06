@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateSurvey, getSurveyByIndex } from "../utils/surveyStorage";
 
@@ -60,6 +60,15 @@ const EditSurvey = () => {
 		setPoints(newPoints);
 	};
 
+	const inputRef = useRef(null);
+
+	useEffect(() => {
+		// Saat komponen dimuat, fokuskan ke input
+		if (inputRef.current) {
+		inputRef.current.focus();
+		}
+	}, []);
+
   return (
     <>
       <div className="text-center">
@@ -69,6 +78,7 @@ const EditSurvey = () => {
 						<input
 							type="text"
 							className="form-control card-questions text-center"
+							ref={inputRef}
 							placeholder="Masukkan soal survey di sini"
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
@@ -129,7 +139,7 @@ const EditSurvey = () => {
 											maxLength="3"
 											className="form-control text-center"
 											placeholder="No"
-											value={points[index]}
+											value={points[index + 5]}
 											onChange={(e) => handlePointChange(index + 5, e.target.value)}
 										/>
 									</div>
@@ -141,10 +151,10 @@ const EditSurvey = () => {
 			</div>
 			<div className="mt-2 text-center">
 				<button className="btn-lg button-77 xlg" onClick={() => navigate("/list-survey")}>
-					Back <span className="btn-key" data-key="">[Backspace]</span>
+					Back
 				</button>
 				<button className="btn-lg button-77 xlg" data-key="Enter" onClick={handleSaveSurvey}>
-					SIMPAN <span className="btn-key">[enter]</span>
+					SIMPAN
 				</button>
 			</div>
     </>

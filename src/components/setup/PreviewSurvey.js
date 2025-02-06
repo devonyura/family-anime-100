@@ -1,12 +1,23 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSurveyByIndex, deleteSurvey } from "../utils/surveyStorage";
+import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 
 const PreviewSurvey = () => {
 
   const { index } = useParams();
+  const indexString = toString(index);
   const survey = getSurveyByIndex(parseInt(index, 10));
-  console.log(survey);
+  console.log(indexString);
+
+  useKeyboardNavigation(
+    {
+    "Backspace": "/list-survey"
+    },
+    () => {
+      return {"e":`/edit-survey/${index}`};
+    }
+  );
 
   const navigate = useNavigate();
 

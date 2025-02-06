@@ -1,9 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useKeyboardNavigation from "./utils/useKeyboardNavigation";
 
 const HowToPlay = () => {
 
   const navigate = useNavigate();
+
+  useKeyboardNavigation({
+    "Backspace": "/main-menu"
+  })
 
   return (
     <div className="row align-content-center">
@@ -55,7 +60,7 @@ const HowToPlay = () => {
       </div>
       <div className="mt-5 text-center">
         <button className="btn-lg button-77 xlg" onClick={()=>navigate("/main-menu")}>
-          Home screen
+          Main Menu
           <span className="btn-key" data-key="Backspace">
             [Backspace]
           </span>

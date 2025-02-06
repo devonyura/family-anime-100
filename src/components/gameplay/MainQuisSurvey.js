@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSurveyByIndex } from "../utils/surveyStorage";
 import createAnswerRevealer from "../utils/answerRevealer";
+import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 
 const MainQuisSurvey = () => {
 
@@ -66,6 +67,10 @@ const MainQuisSurvey = () => {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
 	}, [revealedAnswers, addedPoints]);
+
+	useKeyboardNavigation({
+		"Backspace": "/list-card-survey"
+	})
 
 	if (!survey) {
 		return <p>Survey tidak ditemukan</p>

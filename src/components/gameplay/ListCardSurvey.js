@@ -1,12 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllSurveys } from "../utils/surveyStorage";
+import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 
 const ListCardSurvey = () => {
 
   const surveys = getAllSurveys();
   console.log(surveys);
   const navigate = useNavigate();
+
+  useKeyboardNavigation(
+    {
+    "Backspace": "/main-menu"
+    },
+    () => {
+      const dynamicRoutes = {};
+      surveys.forEach((_, index)=>{
+        const key = (index + 1) % 10;
+        dynamicRoutes[key] = `/main-quis-survey/${index}`; 
+      })
+      return dynamicRoutes;
+    }
+  )
 
   return (
     <>
@@ -19,9 +34,9 @@ const ListCardSurvey = () => {
               onClick={() => navigate(`/main-quis-survey/${index}`) }
             >
               <div className="card-body">
-                <h1 className="card-title mt-3 no">#{index + 1}</h1>
+                <h1 className="card-title mt-3 no">#{index + 1 % 10}</h1>
                 <h2 className="card-title mt-3">survey</h2>
-                <span className="btn-key light">[{index + 1}]</span>
+                <span className="btn-key light">[{index + 1 % 10}]</span>
               </div>
             </div>
           </div>
@@ -29,7 +44,7 @@ const ListCardSurvey = () => {
       </div>
       <div className="mt-2 text-center">
         <button className="btn-lg button-77 xlg" onClick={()=>navigate("/main-menu")}>
-          Home screen
+          Main Menu
           <span className="btn-key" data-key="Backspace">
             [Backspace]
           </span>

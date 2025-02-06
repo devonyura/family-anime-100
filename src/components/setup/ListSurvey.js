@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllSurveys} from "../utils/surveyStorage";
+import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 
 const ListSurvey = () => {
   // initializeSurveyData();
@@ -13,6 +14,21 @@ const ListSurvey = () => {
     const surveyFromStorage = getAllSurveys();
     setSurveys(surveyFromStorage);
   }, []);
+
+  useKeyboardNavigation(
+    {
+      "Backspace": "/main-menu",
+      "Enter": "/add-survey"
+    },
+    () => {
+      const dynamicRoutes = {};
+      surveys.forEach((_, index)=>{
+        const key = (index + 1) % 10;
+        dynamicRoutes[key] = `/preview-survey/${index}`; 
+      })
+      return dynamicRoutes;
+    }
+  );
 
   return (
     <>
@@ -35,7 +51,9 @@ const ListSurvey = () => {
                     {survey.question}
                   </div>
                   <button className="btn-lg button-77 xlg">
-                    <span className="btn-key" onClick={()=>navigate(`/preview-survey/${index}`)}>Lihat Lengkap [{index + 1}]</span>
+                    <span className="btn-key" onClick={()=>navigate(`/preview-survey/${index}`)}>
+                      Lihat Lengkap [{index + 1 % 10}]
+                    </span>
                   </button>
                 </div>
               </div>

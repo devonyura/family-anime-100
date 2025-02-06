@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addSurvey } from "../utils/surveyStorage";
+import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 
 const AddSurvey = () => {
 
@@ -46,6 +47,10 @@ const AddSurvey = () => {
 		setPoints(newPoints);
 	};
 
+	useKeyboardNavigation({
+		"Backspace": "/list-survey"
+	});
+
   return (
     <>
       <div className="text-center">
@@ -57,6 +62,7 @@ const AddSurvey = () => {
 							className="form-control card-questions text-center"
 							placeholder="Masukkan soal survey di sini"
 							value={question}
+							tabIndex={1}
 							onChange={(e) => setQuestion(e.target.value)}
 						/>
 					</div>
@@ -130,7 +136,7 @@ const AddSurvey = () => {
 					Back <span className="btn-key" data-key="">[Backspace]</span>
 				</button>
 				<button className="btn-lg button-77 xlg" data-key="Enter" onClick={handleSaveSurvey}>
-					SIMPAN <span className="btn-key">[enter]</span>
+					SIMPAN
 				</button>
 			</div>
     </>
