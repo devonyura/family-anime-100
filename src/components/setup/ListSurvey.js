@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllSurveys } from "../utils/surveyStorage";
+import { getAllSurveys} from "../utils/surveyStorage";
 
 const ListSurvey = () => {
   // initializeSurveyData();
