@@ -1,3 +1,5 @@
+import { showCorrectOverlay, showTopSurveyOverlay, showWaitOverlay } from "./overlay";
+
 // utils/answerRevealer.js
 export default function createAnswerRevealer(setRevealedAnswers, setActiveButton) {
 	let timeoutId = null;
@@ -18,11 +20,20 @@ export default function createAnswerRevealer(setRevealedAnswers, setActiveButton
 
 		if (keyMap.hasOwnProperty(event.key)) {
 			const index = keyMap[event.key];
-
+			
 			if (!timeoutId) {
 				setActiveButton(index);
+				showWaitOverlay();
 				timeoutId = setTimeout(() => {
-					setRevealedAnswers((prev) => [...prev, index]);
+					console.log(event.key);
+					if(event.key === '1') {
+						showTopSurveyOverlay();
+					} else {
+						showCorrectOverlay();
+					}
+					setTimeout(() => {
+						setRevealedAnswers((prev) => [...prev, index]);
+					}, 3500);
 				}, 2500);
 			}
 		}

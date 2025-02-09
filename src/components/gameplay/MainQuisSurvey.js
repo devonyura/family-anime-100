@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSurveyByIndex } from "../utils/surveyStorage";
 import createAnswerRevealer from "../utils/answerRevealer";
 import useKeyboardNavigation from "../utils/useKeyboardNavigation";
+import { showWrongOverlay, showWaitOverlay } from "../utils/overlay";
 
 const MainQuisSurvey = () => {
 
@@ -15,6 +16,9 @@ const MainQuisSurvey = () => {
 	const [teamRedPoints, setTeamRedPoints] = useState(() => parseInt(localStorage.getItem("teamRedPoints")) || 0);
 	const [teamBluePoints, setTeamBluePoints] = useState(() => parseInt(localStorage.getItem("teamBluePoints")) || 0);
 	const [addedPoints, setAddedPoints] = useState({});
+
+	const [isRKeyPressed, setIsRKeyPressed] = useState(false);
+	const revealTimeoutRef = useRef(null);
 
 	useEffect(() => {
 		const { handleKeyDown, handleKeyUp } = createAnswerRevealer(setRevealedAnswers, setActiveButton);
@@ -54,19 +58,97 @@ const MainQuisSurvey = () => {
 		}
 	};
 
+	const [isSKeyPressed, setIsSKeyPressed] = useState(false);
+	const timeoutRef = useRef(null);
+
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (event.key === "," || event.key === ".") {
+
+				let pointEl = null;
+
+				if (event.key === ",") {
+					pointEl = window.document.querySelector(".card-78.red");
+				}
+				if (event.key === ".") {
+					pointEl = window.document.querySelector(".card-78.blue");
+				}
+
+				if (pointEl) {
+					pointEl.classList.add("active");
+
+					setTimeout(() => {
+						pointEl.classList.remove("active");
+					}, 800);
+				}
+
 				handleHoldStart(event.key);
+			}
+
+			if (event.key === "s" && !isSKeyPressed) {
+				setIsSKeyPressed(true);
+
+				showWaitOverlay();	
+
+			 	timeoutRef.current = setTimeout(()=>{
+					showWrongOverlay();
+				}, 2500);
+			
+			}
+
+			if (event.key === "r" && !isRKeyPressed) {
+				setIsRKeyPressed(true);
+				
+				revealTimeoutRef.current = setTimeout(() => {
+					const unrevealedAnswers = survey.answers
+						.map((_, index) => index)
+						.filter(index => !revealedAnswers.includes(index));
+
+					let delay = 0;
+					unrevealedAnswers.forEach((index, i) => {
+						setTimeout(() => {
+							setRevealedAnswers(prev => {
+								const newRevealed = [...prev, index];
+
+								// Jika index 0 (jawaban pertama), berikan kelas `top-survey`
+								if (index === 0) {
+									const firstAnswerEl = document.querySelector(".list-card.card-78");
+									if (firstAnswerEl) {
+										firstAnswerEl.classList.add("top-survey");
+									}
+								}
+
+								return newRevealed;
+							});
+						}, delay);
+
+						delay += 1200;
+					});
+				}, 2500);
 			}
 		};
 
-		window.addEventListener("keydown", handleKeyDown);
+		const handleKeyUp = (event) => {
+			if (event.key === "s") {
+				setIsSKeyPressed(false); // Reset ketika tombol dilepas
+			}
+			clearTimeout(timeoutRef.current);
 
+			// reset jika tombol 'r' dilepas sebelum 2,5 detik
+			if (event.key === "r") {
+				setIsRKeyPressed(false);
+				clearTimeout(revealTimeoutRef.current);
+			}
+		};
+	
+		window.addEventListener("keydown", handleKeyDown);
+		window.addEventListener("keyup", handleKeyUp);
+	
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener("keyup", handleKeyUp);
 		};
-	}, [revealedAnswers, addedPoints]);
+	}, [revealedAnswers, addedPoints, isSKeyPressed]);
 
 	useKeyboardNavigation({
 		"Backspace": "/list-card-survey"
@@ -138,6 +220,7 @@ const MainQuisSurvey = () => {
 					</div>
 				</div>
 			</div>
+			<div class="wrap-overlay"></div>
 		</>
 	);
 };
