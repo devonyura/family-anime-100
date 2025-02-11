@@ -6,6 +6,8 @@ import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 import { showWrongOverlay, showWaitOverlay } from "../utils/overlay";
 import SoundManager from "../utils/SoundManager";
 import ConfirmModal from "../utils/confirmModal";
+import { showWinnerOverlay } from ".././utils/overlay";
+
 
 const MainQuisSurvey = () => {
 
@@ -20,7 +22,7 @@ const MainQuisSurvey = () => {
 	const [teamBluePoints, setTeamBluePoints] = useState(() => parseInt(localStorage.getItem("teamBluePoints")) || 0);
 	const [addedPoints, setAddedPoints] = useState({});
 
-	const [isRKeyPressed, setIsRKeyPressed] = useState(false);
+	const [isFKeyPressed, setIsFKeyPressed] = useState(false);
 	const revealTimeoutRef = useRef(null);
 
 	useEffect(() => {
@@ -100,8 +102,9 @@ const MainQuisSurvey = () => {
 			
 			}
 
-			if (event.key === "f" && !isRKeyPressed) {
-				setIsRKeyPressed(true);
+			if (event.key === "f" && !isFKeyPressed) {
+				setIsFKeyPressed(true);
+				SoundManager.playRevealedAllSurvey();
 				
 				revealTimeoutRef.current = setTimeout(() => {
 					const unrevealedAnswers = survey.answers
@@ -125,14 +128,26 @@ const MainQuisSurvey = () => {
 								return newRevealed;
 							});
 						}, delay);
-
-						delay += 1200;
+						
+						// delay += 1200;
+						delay += 1800;
 					});
 				}, 2500);
 			}
 
 			if (event.key === "Backspace") {
+				SoundManager.playClickSound();
 				ConfirmModal.call_confirm("Survey ini sudah selesai?", ()=>navigate("/list-card-survey"));
+			}
+
+			if (event.key === "w") {
+
+				const winner = (teamBluePoints > teamRedPoints ) ?"blue":"red";
+				const points = (teamBluePoints > teamRedPoints ) ?teamBluePoints:teamRedPoints;
+				ConfirmModal.call_confirm("Tampilkan Pemenang", ()=> {
+					SoundManager.playWinnerSurvey();
+					showWinnerOverlay(winner,points); 
+				});
 			}
 		};
 
@@ -144,7 +159,7 @@ const MainQuisSurvey = () => {
 
 			// reset jika tombol 'r' dilepas sebelum 2,5 detik
 			if (event.key === "r") {
-				setIsRKeyPressed(false);
+				setIsFKeyPressed(false);
 				clearTimeout(revealTimeoutRef.current);
 			}
 		};

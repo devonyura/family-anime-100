@@ -516,6 +516,10 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 24rem;
 }
 
+.overlay.wait p {
+  font-size: 8rem;
+}
+
 .overlay p {
   font-size: 5rem;
 }

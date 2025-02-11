@@ -38,7 +38,7 @@ export default function createAnswerRevealer(setRevealedAnswers, setActiveButton
 					setTimeout(() => {
 						setRevealedAnswers((prev) => [...prev, index]);
 						SoundManager.playRevealedSurvey();
-					}, 3500);
+					}, 2900);
 				}, 2500);
 			}
 		}

@@ -1,3 +1,5 @@
+import SoundManager from "./SoundManager";
+
 class ConfirmModal {
 	static init() {
 		// Buat elemen modal di dalam body jika belum ada
@@ -51,8 +53,10 @@ class ConfirmModal {
 
 	static handleKeyPress(event) {
 		if (event.key === "y" || event.key === "Y") {
+			SoundManager.playClickSound();
 			ConfirmModal.confirm(true);
 		} else if (event.key === "n" || event.key === "N" || event.key === "Escape") {
+			SoundManager.playClickSound();
 			ConfirmModal.confirm(false);
 		}
 	}

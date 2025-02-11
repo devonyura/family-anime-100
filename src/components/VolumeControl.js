@@ -19,10 +19,9 @@ const VolumeControl = () => {
 			right: "10px",
 			background: "rgba(0,0,0,0.7)",
 			color: "white",
-			padding: "10px",
+			padding: "5px 10px",
 			borderRadius: "5px",
 		}}>
-			<label>Volume:</label>
 			<input
 				type="range"
 				min="0"

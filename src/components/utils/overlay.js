@@ -33,8 +33,27 @@ export const showTopSurveyOverlay = () => {
 	`);
 };
 
+export const showWinnerOverlay = (winner, points) => {
+	addOverlay(`
+		<div class="overlay top-survey d-flex flex-column">
+			<h1>WINNER!</h1>
+			<div class="row container my-1 point d-flex justify-content-center">
+				<div class="col-md-6 d-flex justify-content-center">
+					<div class="list-item">
+						<div class="list-card card-78 ${winner}">
+							<div>Skor Akhir</div>
+							<div class="number-circle point">${points}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p>tim ${winner} adalah pemenang!</p>
+		</div>
+	`, true);
+};
+
 // Fungsi utama untuk menambahkan overlay ke dalam .wrap-overlay dan menghapusnya setelah 3 detik
-const addOverlay = (overlayHtml) => {
+const addOverlay = (overlayHtml, isWinner=false) => {
 	const wrapOverlay = document.querySelector(".wrap-overlay");
 	if (!wrapOverlay) return;
 
@@ -46,7 +65,10 @@ const addOverlay = (overlayHtml) => {
 	wrapOverlay.appendChild(overlayElement.firstElementChild);
 
 	// Hapus overlay setelah 3 detik
-	setTimeout(() => {
-		wrapOverlay.innerHTML = "";
-	}, 2500);
+	if(!isWinner) {
+		setTimeout(() => {
+			wrapOverlay.innerHTML = "";
+		}, 2500);
+	}
+	
 };

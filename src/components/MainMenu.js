@@ -2,6 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import useKeyboardNavigation from "./utils/useKeyboardNavigation";
 import SoundManager from "./utils/SoundManager";
+import Information from "./../images/information.svg"
+import Hint from "./../images/hint.svg"
+import Play from "./../images/play.svg"
+import SetUp from "./../images/set-up.svg"
 
 const MainMenu = () => {
 
@@ -11,6 +15,7 @@ const MainMenu = () => {
     "1": "/list-card-survey",
     "2": "/how-to-play",
     "3": "/list-survey",
+    "i": "/about",
     "Backspace": "/"
   });
 
@@ -25,7 +30,7 @@ const MainMenu = () => {
           >
             <div className="card-body">
               <img
-                src="assets/logo-dummy.png"
+                src={Play}
                 alt="icon app"
                 className="img-fluid"
                 width="200"
@@ -42,7 +47,7 @@ const MainMenu = () => {
           >
             <div className="card-body" onClick={()=>{navigate("/how-to-play"); SoundManager.playClickSound();}}>
               <img
-                src="assets/logo-dummy.png"
+                src={Information}
                 alt="icon app"
                 className="img-fluid"
                 width="200"
@@ -59,7 +64,7 @@ const MainMenu = () => {
           >
             <div className="card-body">
               <img
-                src="assets/logo-dummy.png"
+                src={SetUp}
                 alt="icon app"
                 className="img-fluid"
                 width="200"
@@ -78,7 +83,7 @@ const MainMenu = () => {
           </button>
         </div>
       </div>
-      <button className="btn btn-primary btn-lg info">
+      <button className="btn btn-primary btn-lg info" onClick={()=>{navigate("/about"); SoundManager.playClickSound();}}>
         <i className="bi bi-info-circle" data-key="i"></i>
       </button>
     </div>

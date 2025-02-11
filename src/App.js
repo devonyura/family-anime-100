@@ -9,6 +9,7 @@ import PreviewSurvey from "./components/setup/PreviewSurvey";
 import EditSurvey from "./components/setup/EditSurvey";
 import ListCardSurvey from "./components/gameplay/ListCardSurvey";
 import MainQuisSurvey from "./components/gameplay/MainQuisSurvey";
+import About from "./components/About";
 import React from "react";
 import VolumeControl from "./components/VolumeControl";
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<HomeScreen/>} />
           <Route path="/main-menu" element={<MainMenu/>} />
           <Route path="/how-to-play" element={<HowToPlay/>} />
+          <Route path="/about" element={<About/>} />
           {/* Setup Section */}
           <Route path="/list-survey" element={<ListSurvey/>} />
           <Route path="/add-survey" element={<AddSurvey/>} />
