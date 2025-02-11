@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useKeyboardNavigation from "./utils/useKeyboardNavigation";
+import SoundManager from "./utils/SoundManager";
 
 const HowToPlay = () => {
 
@@ -59,7 +60,7 @@ const HowToPlay = () => {
         </div>
       </div>
       <div className="mt-5 text-center">
-        <button className="btn-lg button-77 xlg" onClick={()=>navigate("/main-menu")}>
+        <button className="btn-lg button-77 xlg" onClick={()=>{navigate("/main-menu");SoundManager.playClickSound();}}>
           Main Menu
           <span className="btn-key" data-key="Backspace">
             [Backspace]

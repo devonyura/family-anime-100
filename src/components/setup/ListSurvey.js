@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllSurveys} from "../utils/surveyStorage";
 import useKeyboardNavigation from "../utils/useKeyboardNavigation";
+import SoundManager from "../utils/SoundManager";
+import ConfirmModal from "../utils/confirmModal";
 
 const ListSurvey = () => {
   // initializeSurveyData();
@@ -30,6 +32,11 @@ const ListSurvey = () => {
     }
   );
 
+  const handleBack = () => {
+    navigate("/main-menu");
+    SoundManager.playClickSound();
+  }
+
   return (
     <>
       <div className="text-center">
@@ -51,7 +58,7 @@ const ListSurvey = () => {
                     {survey.question}
                   </div>
                   <button className="btn-lg button-77 xlg">
-                    <span className="btn-key" onClick={()=>navigate(`/preview-survey/${index}`)}>
+                    <span className="btn-key" onClick={()=>{navigate(`/preview-survey/${index}`);SoundManager.playClickSound();}}>
                       Lihat Lengkap [{index + 1 % 10}]
                     </span>
                   </button>
@@ -62,11 +69,11 @@ const ListSurvey = () => {
         </div>
       </div>
       <div className="mt-2 text-center">
-        <button className="btn-lg button-77 xlg" data-key="Backspace" onClick={()=>navigate("/main-menu")}>
+        <button className="btn-lg button-77 xlg" data-key="Backspace" onClick={()=>ConfirmModal.call_confirm("Yakin",handleBack)}>
           Back
           <span className="btn-key">[Backspace]</span>
         </button>
-        <button className="btn-lg button-77 xlg"  data-key="Enter" onClick={()=>navigate("/add-survey")}>
+        <button className="btn-lg button-77 xlg"  data-key="Enter" onClick={()=>{navigate("/add-survey");SoundManager.playClickSound();}}>
           Tambah survey
           <span className="btn-key">[ENTER]</span>
         </button>

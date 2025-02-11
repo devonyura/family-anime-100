@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addSurvey } from "../utils/surveyStorage";
-import useKeyboardNavigation from "../utils/useKeyboardNavigation";
+import SoundManager from "../utils/SoundManager";
+import ConfirmModal from "../utils/confirmModal";
 
 const AddSurvey = () => {
 
@@ -13,6 +14,7 @@ const AddSurvey = () => {
 	const [points, setPoints] = useState(Array(10).fill(""));
 
   const handleSaveSurvey = () => {
+		SoundManager.playClickSound();
 		// Validasi input
 		if (!question.trim() || answers.some(a => !a.trim()) || points.some(p => p === "")) {
 			alert("Harap isi semua input sebelum menyimpan.");
@@ -47,9 +49,10 @@ const AddSurvey = () => {
 		setPoints(newPoints);
 	};
 
-	useKeyboardNavigation({
-		"Backspace": "/list-survey"
-	});
+	const handleBack = () => {
+		navigate("/list-survey");
+		SoundManager.playClickSound();
+	}
 
   return (
     <>
@@ -132,8 +135,8 @@ const AddSurvey = () => {
 				</div>
 			</div>
 			<div className="mt-2 text-center">
-				<button className="btn-lg button-77 xlg" onClick={() => navigate("/list-survey")}>
-					Back <span className="btn-key" data-key="">[Backspace]</span>
+				<button className="btn-lg button-77 xlg" onClick={() => { ConfirmModal.call_confirm("Batal Membuat Survey baru?",handleBack) }}>
+					Back
 				</button>
 				<button className="btn-lg button-77 xlg" data-key="Enter" onClick={handleSaveSurvey}>
 					SIMPAN

@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getSurveyByIndex } from "../utils/surveyStorage";
 import createAnswerRevealer from "../utils/answerRevealer";
 import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 import { showWrongOverlay, showWaitOverlay } from "../utils/overlay";
+import SoundManager from "../utils/SoundManager";
+import ConfirmModal from "../utils/confirmModal";
 
 const MainQuisSurvey = () => {
 
 	const { index } = useParams();
 	const survey = getSurveyByIndex(index);
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const [revealedAnswers, setRevealedAnswers] = useState([]);
 	const [activeButton, setActiveButton] = useState(null);
@@ -73,37 +76,38 @@ const MainQuisSurvey = () => {
 				if (event.key === ".") {
 					pointEl = window.document.querySelector(".card-78.blue");
 				}
-
 				if (pointEl) {
+					SoundManager.playClickSound();
 					pointEl.classList.add("active");
 
 					setTimeout(() => {
 						pointEl.classList.remove("active");
 					}, 800);
 				}
-
 				handleHoldStart(event.key);
 			}
 
 			if (event.key === "s" && !isSKeyPressed) {
 				setIsSKeyPressed(true);
 
-				showWaitOverlay();	
+				showWaitOverlay();
+				SoundManager.playWaitingSurvey();
 
 			 	timeoutRef.current = setTimeout(()=>{
+					SoundManager.playWrongAnswer();
 					showWrongOverlay();
 				}, 2500);
 			
 			}
 
-			if (event.key === "r" && !isRKeyPressed) {
+			if (event.key === "f" && !isRKeyPressed) {
 				setIsRKeyPressed(true);
 				
 				revealTimeoutRef.current = setTimeout(() => {
 					const unrevealedAnswers = survey.answers
-						.map((_, index) => index)
-						.filter(index => !revealedAnswers.includes(index));
-
+					.map((_, index) => index)
+					.filter(index => !revealedAnswers.includes(index));
+					
 					let delay = 0;
 					unrevealedAnswers.forEach((index, i) => {
 						setTimeout(() => {
@@ -125,6 +129,10 @@ const MainQuisSurvey = () => {
 						delay += 1200;
 					});
 				}, 2500);
+			}
+
+			if (event.key === "Backspace") {
+				ConfirmModal.call_confirm("Survey ini sudah selesai?", ()=>navigate("/list-card-survey"));
 			}
 		};
 
@@ -150,9 +158,12 @@ const MainQuisSurvey = () => {
 		};
 	}, [revealedAnswers, addedPoints, isSKeyPressed]);
 
-	useKeyboardNavigation({
-		"Backspace": "/list-card-survey"
-	})
+	useEffect(() => {
+		setTimeout(() => {
+			SoundManager.playIntroSurvey();
+		}, 800);
+	}, [location.pathname])
+	
 
 	if (!survey) {
 		return <p>Survey tidak ditemukan</p>
@@ -220,7 +231,7 @@ const MainQuisSurvey = () => {
 					</div>
 				</div>
 			</div>
-			<div class="wrap-overlay"></div>
+			<div className="wrap-overlay"></div>
 		</>
 	);
 };

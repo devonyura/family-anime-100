@@ -9,8 +9,11 @@ import PreviewSurvey from "./components/setup/PreviewSurvey";
 import EditSurvey from "./components/setup/EditSurvey";
 import ListCardSurvey from "./components/gameplay/ListCardSurvey";
 import MainQuisSurvey from "./components/gameplay/MainQuisSurvey";
+import React from "react";
+import VolumeControl from "./components/VolumeControl";
 
 function App() {
+
   return (
     <Router>
       <div>
@@ -29,19 +32,9 @@ function App() {
           <Route path="/list-card-survey" element={<ListCardSurvey/>} />
           <Route path="/main-quis-survey/:index" element={<MainQuisSurvey/>} />
         </Routes>
+        <VolumeControl/>
       </div>
     </Router>
-    // <div>
-    //   <HomeScreen />
-    //   <MainMenu />
-    //   <HowToPlay />
-    //   <ListSurvey />
-    //   <AddSurvey />
-    //   <PreviewSurvey />
-    //   <EditSurvey />
-    //   <ListCardSurvey />
-    //   <MainQuisSurvey />
-    // </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useKeyboardNavigation from "./utils/useKeyboardNavigation";
+import SoundManager from "./utils/SoundManager";
 
 const MainMenu = () => {
 
@@ -17,7 +18,7 @@ const MainMenu = () => {
     <div className="py-5" id="apps">
       <div className="row align-content-center text-center">
         <h1 className="text-center mb-5">quis family anime 100!</h1>
-        <div className="col d-flex justify-content-center" onClick={()=>navigate("/list-card-survey")}>
+        <div className="col d-flex justify-content-center" onClick={()=>{navigate("/list-card-survey"); SoundManager.playClickSound();}}>
           <div
             className="card text-white bg-primary mb-3 px-4 py-4 card-78"
             data-key="1"
@@ -39,7 +40,7 @@ const MainMenu = () => {
             className="card text-white bg-primary mb-3 px-4 py-4 card-78"
             data-key="2"
           >
-            <div className="card-body" onClick={()=>navigate("/how-to-play")}>
+            <div className="card-body" onClick={()=>{navigate("/how-to-play"); SoundManager.playClickSound();}}>
               <img
                 src="assets/logo-dummy.png"
                 alt="icon app"
@@ -51,7 +52,7 @@ const MainMenu = () => {
             </div>
           </div>
         </div>
-        <div className="col d-flex justify-content-start" onClick={()=>navigate("/list-survey")}>
+        <div className="col d-flex justify-content-start" onClick={()=>{navigate("/list-survey");SoundManager.playClickSound();}}>
           <div
             className="card text-white bg-primary mb-3 px-4 py-4 card-78"
             data-key="3"
@@ -69,7 +70,7 @@ const MainMenu = () => {
           </div>
         </div>
         <div className="mt-5">
-          <button className="btn-lg button-77 xlg" onClick={()=>navigate("/")}>
+          <button className="btn-lg button-77 xlg" onClick={()=>{navigate("/");SoundManager.playClickSound();}}>
             Home screen
             <span className="btn-key" data-key="Backspace">
               [Backspace]

@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSurveyByIndex, deleteSurvey } from "../utils/surveyStorage";
 import useKeyboardNavigation from "../utils/useKeyboardNavigation";
+import SoundManager from "../utils/SoundManager";
+import ConfirmModal from "../utils/confirmModal";
 
 const PreviewSurvey = () => {
 
@@ -27,6 +29,8 @@ const PreviewSurvey = () => {
   }
 
   const handleDelete = () => {
+
+    SoundManager.playClickSound();
 
     const deleteProccess = deleteSurvey(index);
 
@@ -77,16 +81,16 @@ const PreviewSurvey = () => {
         </div>
       </div>
       <div className="mt-2 text-center">
-        <button className="btn-lg button-77 xlg" onClick={()=>navigate("/list-survey")}>
+        <button className="btn-lg button-77 xlg" onClick={()=>{navigate("/list-survey");SoundManager.playClickSound();}}>
           kembali
           <span className="btn-key" data-key="">
             [Backspace]
           </span>
         </button>
-        <button className="btn-lg button-77 xlg" data-key="Enter" onClick={()=>navigate(`/edit-survey/${index}`)}>
+        <button className="btn-lg button-77 xlg" data-key="Enter" onClick={()=>{navigate(`/edit-survey/${index}`);SoundManager.playClickSound();}}>
           EDIt <span className="btn-key">[E]</span>
         </button>
-        <button className="btn-lg button-77 xlg" data-key="Enter" onClick={()=>handleDelete()}>
+        <button className="btn-lg button-77 xlg" data-key="Enter" onClick={()=>ConfirmModal.call_confirm("Yakin Ingin Menghapus Survey?",handleDelete)}>
           HAPUS
         </button>
       </div>

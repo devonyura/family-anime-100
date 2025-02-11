@@ -1,10 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-// import "./HomeScreen.css";
+import SoundManager from "./utils/SoundManager";
+import useKeyboardNavigation from "./utils/useKeyboardNavigation";
 
 const HomeScreen = () => {
-
+  
   const navigate = useNavigate();
+
+  // Handler keyika totmbol "Mulai!" diklik
+  const handleStart = () => {
+    // SoundManager.playBacksound();
+    navigate("/main-menu");
+    SoundManager.playClickSound();
+  }
+
+  useKeyboardNavigation({"Enter": "/main-menu"})
 
   return (
     <div className="overflow-hidden">
@@ -17,7 +27,7 @@ const HomeScreen = () => {
             width="500"
           />
           {/* <h1>quis family anime 100!</h1> */}
-          <button className="btn btn-primary btn-lg xlg" onClick={ ()=>navigate("/main-menu") }>Mulai!</button>
+          <button className="btn btn-primary btn-lg xlg" onClick={handleStart}>Mulai!</button>
         </div>
       </div>
     </div>

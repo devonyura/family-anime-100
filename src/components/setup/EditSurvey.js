@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateSurvey, getSurveyByIndex } from "../utils/surveyStorage";
+import SoundManager from "../utils/SoundManager";
+import ConfirmModal from "../utils/confirmModal";
 
 const EditSurvey = () => {
 
@@ -25,6 +27,8 @@ const EditSurvey = () => {
 
 
   const handleSaveSurvey = () => {
+
+		SoundManager.playClickSound();
 
 		// Validasi input
 		if (!question.trim() || answers.some(a => !a.trim()) || points.some(p => p === "")) {
@@ -68,6 +72,11 @@ const EditSurvey = () => {
 		inputRef.current.focus();
 		}
 	}, []);
+
+	const handleBack = () => {
+		navigate("/list-survey");
+		SoundManager.playClickSound();
+	}
 
   return (
     <>
@@ -150,7 +159,7 @@ const EditSurvey = () => {
 				</div>
 			</div>
 			<div className="mt-2 text-center">
-				<button className="btn-lg button-77 xlg" onClick={() => navigate("/list-survey")}>
+				<button className="btn-lg button-77 xlg" onClick={() => {ConfirmModal.call_confirm("Batal Melakukan Edit?", handleBack)}}>
 					Back
 				</button>
 				<button className="btn-lg button-77 xlg" data-key="Enter" onClick={handleSaveSurvey}>

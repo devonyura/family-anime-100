@@ -1,4 +1,5 @@
 import { showCorrectOverlay, showTopSurveyOverlay, showWaitOverlay } from "./overlay";
+import SoundManager from "./SoundManager";
 
 // utils/answerRevealer.js
 export default function createAnswerRevealer(setRevealedAnswers, setActiveButton) {
@@ -24,15 +25,19 @@ export default function createAnswerRevealer(setRevealedAnswers, setActiveButton
 			if (!timeoutId) {
 				setActiveButton(index);
 				showWaitOverlay();
+				SoundManager.playWaitingSurvey();
 				timeoutId = setTimeout(() => {
 					console.log(event.key);
 					if(event.key === '1') {
 						showTopSurveyOverlay();
+						SoundManager.playTopSurvey();
 					} else {
 						showCorrectOverlay();
+						SoundManager.playCorrectAnswer();
 					}
 					setTimeout(() => {
 						setRevealedAnswers((prev) => [...prev, index]);
+						SoundManager.playRevealedSurvey();
 					}, 3500);
 				}, 2500);
 			}
