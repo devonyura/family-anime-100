@@ -1,19 +1,27 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const path = require("path");
 
 let mainWindow;
+// let ENV = 'production';
+let ENV = 'development';
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    fullscreen: true,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
     },
+    icon: path.join(__dirname, "favicon.ico")
   });
+
 
   // Load React build output atau localhost saat development
   const startURL =
-    process.env.NODE_ENV === "production"
+    ENV === "production"
       ? `file://${__dirname}/build/index.html`
       : "http://localhost:3000";
 
@@ -32,4 +40,8 @@ app.on("window-all-closed", () => {
 
 app.on("activate", () => {
   if (mainWindow === null) createWindow();
+});
+
+ipcMain.on("close-app", () => {
+  app.quit();
 });

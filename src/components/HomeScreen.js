@@ -29,7 +29,17 @@ const HomeScreen = () => {
       window.addEventListener("keydown",handleEnterKey);
     }
 
+    
   }, [])
+
+  const closeApp = () => {
+    if (window.electronAPI) {
+        window.electronAPI.closeApp();
+    } else {
+        console.error("window.electronAPI tidak ditemukan.");
+    }
+  };
+  
 
   return (
     <div className="overflow-hidden" onClick={()=>SoundManager.playBacksoundSound()}>
@@ -45,6 +55,7 @@ const HomeScreen = () => {
           <br></br>
           {/* <h1>quis family anime 100!</h1> */}
           <button className="btn btn-primary btn-lg xlg" onClick={handleStart}>Mulai! <span className="btn-key light">[Enter]</span></button>
+          <button className="btn btn-danger btn-lg xlg" onClick={closeApp}>Keluar <span className="btn-key light">[Enter]</span></button>
         </div>
       </div>
     </div>
