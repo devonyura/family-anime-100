@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getSurveyByIndex } from "../utils/surveyStorage";
 import createAnswerRevealer from "../utils/answerRevealer";
-import useKeyboardNavigation from "../utils/useKeyboardNavigation";
+// import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 import { showWrongOverlay, showWaitOverlay } from "../utils/overlay";
 import SoundManager from "../utils/SoundManager";
 import ConfirmModal from "../utils/confirmModal";
@@ -137,7 +137,10 @@ const MainQuisSurvey = () => {
 
 			if (event.key === "Backspace") {
 				SoundManager.playClickSound();
-				ConfirmModal.call_confirm("Survey ini sudah selesai?", ()=>navigate("/list-card-survey"));
+				ConfirmModal.call_confirm("Survey ini sudah selesai?", ()=>{
+					SoundManager.stopSound("winner");
+					navigate("/list-card-survey")
+				});
 			}
 
 			if (event.key === "w") {

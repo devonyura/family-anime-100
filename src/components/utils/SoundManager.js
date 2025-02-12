@@ -102,6 +102,14 @@ class SoundManager {
 		}
 	}
 
+	static stopSound(name) {
+		const sound = this.getSound(name);
+		if (sound) {
+			sound.pause();
+			sound.currentTime = 0; // Reset waktu agar bisa diputar ulang cepat
+		}
+	}
+
 	// **Method pemutar suara penting (backsound akan dijeda)**
 	static playCorrectAnswer() {
 		this.playSound("correct-answer", true);

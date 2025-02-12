@@ -2,8 +2,8 @@ const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
 
 let mainWindow;
-// let ENV = 'production';
-let ENV = 'development';
+let ENV = 'production';
+// let ENV = 'development';
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({

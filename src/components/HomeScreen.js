@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SoundManager from "./utils/SoundManager";
 import useKeyboardNavigation from "./utils/useKeyboardNavigation";
 import Hint from "./../images/hint.svg"
-
+import ConfimModal from "./utils/confirmModal";
 
 const HomeScreen = () => {
   
@@ -39,6 +39,8 @@ const HomeScreen = () => {
         console.error("window.electronAPI tidak ditemukan.");
     }
   };
+
+
   
 
   return (
@@ -55,7 +57,7 @@ const HomeScreen = () => {
           <br></br>
           {/* <h1>quis family anime 100!</h1> */}
           <button className="btn btn-primary btn-lg xlg" onClick={handleStart}>Mulai! <span className="btn-key light">[Enter]</span></button>
-          <button className="btn btn-danger btn-lg xlg" onClick={closeApp}>Keluar <span className="btn-key light">[Enter]</span></button>
+          <button className="btn btn-danger btn-lg xlg" onClick={()=>ConfimModal.call_confirm("Keluar Dari aplikasi?", ()=>{closeApp()})}>Keluar</button>
         </div>
       </div>
     </div>
