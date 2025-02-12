@@ -17,10 +17,22 @@ const HomeScreen = () => {
 
   useKeyboardNavigation({"Enter": "/main-menu"})
 
+  const closeApp = () => {
+    if (window.electronAPI) {
+        window.electronAPI.closeApp();
+    } else {
+        console.error("window.electronAPI tidak ditemukan.");
+    }
+  };
+
   useEffect(()=>{
     const handleEnterKey = (event) => {
       if (event.key === 'Enter') {
         SoundManager.playBacksoundSound();
+      }
+
+      if (event.key === "Escape") {
+        ConfimModal.call_confirm("Keluar Dari aplikasi?", ()=>closeApp());
       }
     }
 
@@ -31,17 +43,6 @@ const HomeScreen = () => {
 
     
   }, [])
-
-  const closeApp = () => {
-    if (window.electronAPI) {
-        window.electronAPI.closeApp();
-    } else {
-        console.error("window.electronAPI tidak ditemukan.");
-    }
-  };
-
-
-  
 
   return (
     <div className="overflow-hidden" onClick={()=>SoundManager.playBacksoundSound()}>

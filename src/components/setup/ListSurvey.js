@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllSurveys} from "../utils/surveyStorage";
+import { getAllSurveys, initializeSurveyData} from "../utils/surveyStorage";
 import useKeyboardNavigation from "../utils/useKeyboardNavigation";
 import SoundManager from "../utils/SoundManager";
 import ConfirmModal from "../utils/confirmModal";
 
-const ListSurvey = () => {
-  // initializeSurveyData();
 
+const ListSurvey = () => {
+  
   const navigate = useNavigate();
   const [surveys, setSurveys] = useState([]);
-
+  
   // Fetch data from localStorage
   useEffect(()=>{
+    initializeSurveyData();
     const surveyFromStorage = getAllSurveys();
     setSurveys(surveyFromStorage);
   }, []);
