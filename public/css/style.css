@@ -419,7 +419,6 @@ h1 {
   color: rgba(0, 0, 0, 0.8);
 }
 
-
 .form-control:focus {
   outline: none;
   background: none !important;
@@ -524,6 +523,11 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 5rem;
 }
 
+.overlay p.small-text {
+  font-size: 1.2rem;
+  color: rgb(32, 36, 41);
+}
+
 .top-survey h1 {
   font-size: 18rem;
   text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.8);
@@ -547,7 +551,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background: "white";
   box-shadow: "0px 0px 5px rgba(0,0,0,0.2)";
   border-radius: "5px";
-  text-align: "center"
+  text-align: "center";
 }
 
 .modal {

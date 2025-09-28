@@ -1,5 +1,5 @@
 export const showWrongOverlay = () => {
-	addOverlay(`
+  addOverlay(`
 		<div class="overlay wrong d-flex flex-column">
 			<h1>Salah!</h1>
 			<p>Tidak ada dalam survey</p>
@@ -8,7 +8,7 @@ export const showWrongOverlay = () => {
 };
 
 export const showCorrectOverlay = () => {
-	addOverlay(`
+  addOverlay(`
 		<div class="overlay correct d-flex flex-column">
 			<h1>Benar!</h1>
 			<p>Jawaban ada dalam survey</p>
@@ -17,7 +17,7 @@ export const showCorrectOverlay = () => {
 };
 
 export const showWaitOverlay = () => {
-	addOverlay(`
+  addOverlay(`
 		<div class="overlay wait d-flex flex-column">
 			<p>Survey Membuktikan!</p>
 		</div>
@@ -25,7 +25,7 @@ export const showWaitOverlay = () => {
 };
 
 export const showTopSurveyOverlay = () => {
-	addOverlay(`
+  addOverlay(`
 		<div class="overlay top-survey d-flex flex-column">
 			<h1>Top Survey!</h1>
 			<p>Jawaban adalah top survey</p>
@@ -34,7 +34,8 @@ export const showTopSurveyOverlay = () => {
 };
 
 export const showWinnerOverlay = (winner, points) => {
-	addOverlay(`
+  addOverlay(
+    `
 		<div class="overlay top-survey d-flex flex-column">
 			<h1>WINNER!</h1>
 			<div class="row container my-1 point d-flex justify-content-center">
@@ -48,27 +49,29 @@ export const showWinnerOverlay = (winner, points) => {
 				</div>
 			</div>
 			<p>tim ${winner} adalah pemenang!</p>
+			<p class="small-text">Kembali [BACKSPACE]</p>
 		</div>
-	`, true);
+	`,
+    true
+  );
 };
 
 // Fungsi utama untuk menambahkan overlay ke dalam .wrap-overlay dan menghapusnya setelah 3 detik
-const addOverlay = (overlayHtml, isWinner=false) => {
-	const wrapOverlay = document.querySelector(".wrap-overlay");
-	if (!wrapOverlay) return;
+const addOverlay = (overlayHtml, isWinner = false) => {
+  const wrapOverlay = document.querySelector(".wrap-overlay");
+  if (!wrapOverlay) return;
 
-	// Buat elemen div dan isi dengan overlayHtml
-	const overlayElement = document.createElement("div");
-	overlayElement.innerHTML = overlayHtml;
+  // Buat elemen div dan isi dengan overlayHtml
+  const overlayElement = document.createElement("div");
+  overlayElement.innerHTML = overlayHtml;
 
-	// Tambahkan overlay ke dalam wrap-overlay
-	wrapOverlay.appendChild(overlayElement.firstElementChild);
+  // Tambahkan overlay ke dalam wrap-overlay
+  wrapOverlay.appendChild(overlayElement.firstElementChild);
 
-	// Hapus overlay setelah 3 detik
-	if(!isWinner) {
-		setTimeout(() => {
-			wrapOverlay.innerHTML = "";
-		}, 2500);
-	}
-	
+  // Hapus overlay setelah 3 detik
+  if (!isWinner) {
+    setTimeout(() => {
+      wrapOverlay.innerHTML = "";
+    }, 2500);
+  }
 };

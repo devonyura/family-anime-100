@@ -4,12 +4,11 @@ import useKeyboardNavigation from "./utils/useKeyboardNavigation";
 import SoundManager from "./utils/SoundManager";
 
 const HowToPlay = () => {
-
   const navigate = useNavigate();
 
   useKeyboardNavigation({
-    "Backspace": "/main-menu"
-  })
+    Backspace: "/main-menu",
+  });
 
   return (
     <div className="row align-content-center">
@@ -24,7 +23,7 @@ const HowToPlay = () => {
               <li className="list-group-item d-flex align-items-start">
                 <div className="ms-2 me-auto">
                   <div className="fw-bold">
-                    pemain terdiri dari dua tim (biru &merah)
+                    pemain terdiri dari dua tim (biru & merah)
                   </div>
                 </div>
               </li>
@@ -35,32 +34,35 @@ const HowToPlay = () => {
               </li>
               <li className="list-group-item d-flex align-items-start">
                 <div className="fw-bold">
-                  tim yang menang suit berhak memilih survey yang akan
-                  ditampilkan dan berhak menjawab survey pertama
+                  tim yang menang suit berhak memilih daftar survey yang akan
+                  dimainkan dan berhak menjawab survey pertama kali.
                 </div>
               </li>
               <li className="list-group-item d-flex align-items-start">
                 <div className="fw-bold">
-                  jika jawaban benar akan mendapat point sesuai jumlah survey
+                  jika jawaban benar akan mendapat skor sesuai poin jawaban
                 </div>
               </li>
               <li className="list-group-item d-flex align-items-start">
                 <div className="fw-bold">
-                  lanjut ke anggota tim yang lain menjawab, (jika tidak bisa
-                  menjawab bisa lempar ke tim lawan)
+                  jika jawaban salah maka soal dilempar ke tim lawan
                 </div>
               </li>
               <li className="list-group-item d-flex align-items-start">
-                <div className="fw-bold">
-                  selanjutnya tim yang kalah suit menjawab survey
-                </div>
+                <div className="fw-bold">poin terbanyak adalah pemenangnya</div>
               </li>
             </ol>
           </div>
         </div>
       </div>
       <div className="mt-5 text-center">
-        <button className="btn-lg button-77 xlg" onClick={()=>{navigate("/main-menu");SoundManager.playClickSound();}}>
+        <button
+          className="btn-lg button-77 xlg"
+          onClick={() => {
+            navigate("/main-menu");
+            SoundManager.playClickSound();
+          }}
+        >
           Main Menu
           <span className="btn-key" data-key="Backspace">
             [Backspace]
